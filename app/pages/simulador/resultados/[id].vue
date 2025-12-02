@@ -1,30 +1,37 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <div class="bg-white border-b border-gray-200 px-6 py-4">
-      <div class="flex justify-between items-center">
-        <div class="flex gap-3">
-          <button @click="goBackToSimulator" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex items-center">
+    <div class="bg-white border-b border-gray-200 px-4 sm:px-6 py-4">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <button @click="goBackToSimulator"
+                  class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex items-center justify-center w-full sm:w-auto">
             <svg class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
             Nueva simulación
           </button>
 
-          <button @click="handleEditParams" class="bg-indigo-50 border border-indigo-200 text-indigo-700 px-4 py-2 rounded-lg hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex items-center font-medium">
+          <button @click="handleEditParams"
+                  class="bg-indigo-50 border border-indigo-200 text-indigo-700 px-4 py-2 rounded-lg hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex items-center justify-center font-medium w-full sm:w-auto">
             <svg class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
             </svg>
             Editar parámetros
           </button>
         </div>
 
-        <button @click="exportToPDF" :disabled="isExporting" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex items-center disabled:opacity-50">
+        <button @click="exportToPDF" :disabled="isExporting"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex items-center justify-center disabled:opacity-50 w-full sm:w-auto">
           <svg v-if="!isExporting" class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
-          <svg v-else class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <svg v-else class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
           <span v-if="isExporting">Exportando...</span>
           <span v-else>Exportar a PDF</span>
@@ -33,19 +40,23 @@
     </div>
 
     <div v-if="loading" class="text-center py-20 max-w-7xl mx-auto px-4 py-8">
-      <svg class="animate-spin h-10 w-10 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <svg class="animate-spin h-10 w-10 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none"
+           viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
       <p class="mt-4 text-gray-600">Cargando resultados de la simulación...</p>
     </div>
-    <div v-else class="max-w-7xl mx-auto px-4 py-8">
+    <div v-else class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-      <div v-if="simulationCurrency === 'USD'" class="mb-6 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm">
+      <div v-if="simulationCurrency === 'USD'"
+           class="mb-6 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm">
         <div class="flex">
           <div class="flex-shrink-0">
             <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              <path fill-rule="evenodd"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
             </svg>
           </div>
           <div class="ml-3">
@@ -56,7 +67,8 @@
                 <strong>S/ {{ simulationData.inputs?.usdValue }}</strong>.
               </p>
               <p class="mt-1 text-xs">
-                * Los bonos del estado (BBP/Techo Propio) se calculan originalmente en Soles y han sido convertidos a Dólares para este cálculo.
+                * Los bonos del estado (BBP/Techo Propio) se calculan originalmente en Soles y han sido convertidos a
+                Dólares para este cálculo.
               </p>
             </div>
           </div>
@@ -68,7 +80,7 @@
         <p class="text-gray-600">{{ clientInfo?.name || 'Cliente' }} - {{ propertyInfo?.name || 'Propiedad' }}</p>
       </div>
 
-      <div class="grid grid-cols-4 gap-4 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div class="bg-white p-4 rounded-lg border border-gray-200">
           <dt class="text-sm font-medium text-gray-500">Valor Inmueble</dt>
           <dd class="text-xl font-semibold text-gray-900">{{ formatMoney(summary?.propertyValue) }}</dd>
@@ -87,12 +99,11 @@
         </div>
       </div>
 
-      <!-- Indicadores Clave -->
-      <div class="grid grid-cols-3 gap-6 mb-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
           <div class="text-center">
             <h3 class="text-lg font-medium text-indigo-800 mb-2">Cuota Mensual Total</h3>
-            <div class="text-6xl font-bold text-indigo-600 mb-2">
+            <div class="text-5xl sm:text-6xl font-bold text-indigo-600 mb-2">
               {{ formatMoney(keyIndicators?.monthlyPayment) }}
             </div>
             <div class="text-xs text-gray-500">
@@ -101,14 +112,18 @@
           </div>
         </div>
 
-        <div class="col-span-2 grid grid-cols-2 gap-4">
+        <div class="col-span-1 lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <dt class="text-sm font-medium text-gray-500">TCEA</dt>
-            <dd class="text-3xl font-semibold text-gray-900">{{ keyIndicators?.tcea ? keyIndicators.tcea.toFixed(2) : '0.00' }}%</dd>
+            <dd class="text-3xl font-semibold text-gray-900">
+              {{ keyIndicators?.tcea ? keyIndicators.tcea.toFixed(2) : '0.00' }}%
+            </dd>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <dt class="text-sm font-medium text-gray-500">COK (Mensual)</dt>
-            <dd class="text-3xl font-semibold text-gray-900">{{ keyIndicators?.cok ? keyIndicators.cok.toFixed(4) : '0.00' }}%</dd>
+            <dd class="text-3xl font-semibold text-gray-900">
+              {{ keyIndicators?.cok ? keyIndicators.cok.toFixed(4) : '0.00' }}%
+            </dd>
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <dt class="text-sm font-medium text-gray-500">VAN</dt>
@@ -116,22 +131,26 @@
           </div>
           <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <dt class="text-sm font-medium text-gray-500">TIR (Mensual)</dt>
-            <dd class="text-3xl font-semibold text-gray-900">{{ keyIndicators?.tir ? keyIndicators.tir.toFixed(4) : '0.00' }}%</dd>
+            <dd class="text-3xl font-semibold text-gray-900">
+              {{ keyIndicators?.tir ? keyIndicators.tir.toFixed(4) : '0.00' }}%
+            </dd>
           </div>
         </div>
       </div>
 
-      <!-- NUEVA SECCIÓN: Resultados Totales -->
       <div class="mb-8">
         <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b pb-2">Resultados totales</h2>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="bg-white p-4 rounded-lg border border-gray-200">
             <dt class="text-sm font-medium text-gray-500">Total Intereses</dt>
             <dd class="text-lg font-semibold text-gray-900">{{ formatMoney(totalResults?.totalInterest) }}</dd>
           </div>
           <div class="bg-white p-4 rounded-lg border border-gray-200">
             <dt class="text-sm font-medium text-gray-500">Amortización Capital</dt>
-            <dd class="text-lg font-semibold text-gray-900">{{ formatMoney(totalResults?.totalCapitalAmortization) }}</dd>
+            <dd class="text-lg font-semibold text-gray-900">{{
+                formatMoney(totalResults?.totalCapitalAmortization)
+              }}
+            </dd>
           </div>
           <div class="bg-white p-4 rounded-lg border border-gray-200">
             <dt class="text-sm font-medium text-gray-500">Seguro Desgravamen</dt>
@@ -152,14 +171,15 @@
         </div>
       </div>
 
-      <!-- NUEVA SECCIÓN: Parámetros del Préstamo (Inputs) -->
       <div class="mb-8">
         <h2 class="text-xl font-semibold text-gray-900 mb-4 border-b pb-2">Parámetros del préstamo</h2>
         <div class="bg-white rounded-lg border border-gray-200 p-6">
           <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <dt class="text-sm font-medium text-gray-500">Plazo</dt>
-              <dd class="mt-1 text-sm text-gray-900">{{ inputs?.termYears }} años ({{ (inputs?.termYears || 0) * 12 }} meses)</dd>
+              <dd class="mt-1 text-sm text-gray-900">{{ inputs?.termYears }} años ({{ (inputs?.termYears || 0) * 12 }}
+                meses)
+              </dd>
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Tasa interés</dt>
@@ -175,7 +195,9 @@
               <dt class="text-sm font-medium text-gray-500">Periodo de gracia</dt>
               <dd class="mt-1 text-sm text-gray-900">
                 {{ inputs?.gracePeriodDurationMonths || 0 }} meses
-                <span v-if="inputs?.gracePeriodDurationMonths > 0">({{ inputs?.gracePeriodType === 'total' ? 'Total' : 'Parcial' }})</span>
+                <span v-if="inputs?.gracePeriodDurationMonths > 0">({{
+                    inputs?.gracePeriodType === 'total' ? 'Total' : 'Parcial'
+                  }})</span>
               </dd>
             </div>
             <div>
@@ -193,7 +215,8 @@
             <div>
               <dt class="text-sm font-medium text-gray-500">Costos mensuales</dt>
               <dd class="mt-1 text-sm text-gray-900">
-                Comisiones: {{ formatMoney(inputs?.monthlyCommissions) }} | Adm: {{ formatMoney(inputs?.administrationCosts) }}
+                Comisiones: {{ formatMoney(inputs?.monthlyCommissions) }} | Adm:
+                {{ formatMoney(inputs?.administrationCosts) }}
               </dd>
             </div>
             <div>
@@ -208,7 +231,9 @@
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Envío estado cuenta</dt>
-              <dd class="mt-1 text-sm text-gray-900 capitalize">{{ inputs?.statementDelivery === 'physical' ? 'Físico' : 'Virtual' }}</dd>
+              <dd class="mt-1 text-sm text-gray-900 capitalize">
+                {{ inputs?.statementDelivery === 'physical' ? 'Físico' : 'Virtual' }}
+              </dd>
             </div>
           </dl>
         </div>
@@ -232,19 +257,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { useSimulations } from '~/composables/useSimulations'
-import { useClients } from '~/composables/useClients'
-import { useProperties } from '~/composables/useProperties'
+import {ref, onMounted, computed} from 'vue'
+import {useRoute} from 'vue-router'
+import {useSimulations} from '~/composables/useSimulations'
+import {useClients} from '~/composables/useClients'
+import {useProperties} from '~/composables/useProperties'
 
 // Components
 import AmortizationTable from '~/components/tables/AmortizationTable.vue'
 
 const route = useRoute()
-const { getAmortizationSchedule, getSimulationById, exportSimulationToPDF, setSimulationDraft } = useSimulations()
-const { getClient } = useClients()
-const { getProperty } = useProperties()
+const {getAmortizationSchedule, getSimulationById, exportSimulationToPDF, setSimulationDraft} = useSimulations()
+const {getClient} = useClients()
+const {getProperty} = useProperties()
 
 // State
 const simulationId = ref('')

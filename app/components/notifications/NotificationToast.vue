@@ -2,26 +2,37 @@
   <TransitionGroup
       name="notification"
       tag="div"
-      class="fixed top-20 right-4 z-50 flex flex-col gap-3 w-full max-w-md pointer-events-none"
+      class="fixed top-20 z-50 flex flex-col gap-3 w-full pointer-events-none
+             left-0 px-4 items-center
+             sm:left-auto sm:right-4 sm:items-end sm:px-0 sm:max-w-md"
   >
     <div
         v-for="notification in notifications"
         :key="notification.id"
-        class="pointer-events-auto flex items-start p-4 rounded-r-lg rounded-l-none shadow-lg border-l-4 bg-white transform transition-all duration-300 ring-1 ring-black ring-opacity-5"
+        class="pointer-events-auto flex items-start p-4 shadow-lg border-l-4 bg-white transform transition-all duration-300 ring-1 ring-black ring-opacity-5 w-full max-w-md
+               rounded-lg
+               sm:rounded-r-lg sm:rounded-l-none"
         :class="getBorderClass(notification.type)"
     >
       <div class="flex-shrink-0">
-        <svg v-if="notification.type === 'success'" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <svg v-if="notification.type === 'success'" class="h-6 w-6 text-indigo-500" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <svg v-else-if="notification.type === 'error'" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <svg v-else-if="notification.type === 'error'" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        <svg v-else-if="notification.type === 'warning'" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+        <svg v-else-if="notification.type === 'warning'" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
         </svg>
         <svg v-else class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
       </div>
 
@@ -37,7 +48,9 @@
         >
           <span class="sr-only">Cerrar</span>
           <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"/>
           </svg>
         </button>
       </div>
@@ -46,27 +59,37 @@
 </template>
 
 <script setup lang="ts">
-import { useNotifications } from '~/composables/useNotifications'
+import {useNotifications} from '~/composables/useNotifications'
 
-const { notifications, removeNotification } = useNotifications()
+const {notifications, removeNotification} = useNotifications()
 
 const getBorderClass = (type: string) => {
   switch (type) {
-    case 'success': return 'border-green-500'
-    case 'error': return 'border-red-500'
-    case 'warning': return 'border-yellow-500'
-    case 'info': return 'border-blue-500'
-    default: return 'border-gray-500'
+    case 'success':
+      return 'border-indigo-500'
+    case 'error':
+      return 'border-red-500'
+    case 'warning':
+      return 'border-yellow-500'
+    case 'info':
+      return 'border-blue-500'
+    default:
+      return 'border-gray-500'
   }
 }
 
 const getTitle = (type: string) => {
   switch (type) {
-    case 'success': return '¡Éxito!'
-    case 'error': return 'Error'
-    case 'warning': return 'Advertencia'
-    case 'info': return 'Información'
-    default: return 'Notificación'
+    case 'success':
+      return '¡Éxito!'
+    case 'error':
+      return 'Error'
+    case 'warning':
+      return 'Advertencia'
+    case 'info':
+      return 'Información'
+    default:
+      return 'Notificación'
   }
 }
 </script>

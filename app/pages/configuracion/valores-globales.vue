@@ -2,9 +2,11 @@
   <div class="space-y-8">
 
     <div v-if="isLoading" class="text-center py-20">
-      <svg class="animate-spin h-8 w-8 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <svg class="animate-spin h-8 w-8 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none"
+           viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
       <p class="text-gray-500 mt-4">Cargando valores globales...</p>
     </div>
@@ -18,7 +20,8 @@
       <form @submit.prevent="handleSaveUit" class="card">
         <h3 class="text-xl font-semibold text-gray-900">Valor de la UIT</h3>
         <p class="text-sm text-gray-600 mt-2">
-          La Unidad Impositiva Tributaria (UIT) es un valor de referencia utilizado en Perú para determinar impuestos, multas y la base de cálculo de los bonos.
+          La Unidad Impositiva Tributaria (UIT) es un valor de referencia utilizado en Perú para determinar impuestos,
+          multas y la base de cálculo de los bonos.
         </p>
 
         <div class="mt-6 flex flex-col sm:flex-row sm:items-end sm:space-x-4">
@@ -45,6 +48,7 @@
         </div>
       </form>
 
+      <!--
       <form @submit.prevent="handleSaveExchangeRate" class="card">
         <h3 class="text-xl font-semibold text-gray-900">Tipo de cambio del mercado</h3>
 
@@ -83,19 +87,19 @@
           </div>
         </div>
       </form>
-
+      -->
     </template>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, computed } from 'vue'
-import { useConfiguration } from '~/composables/useConfiguration'
-import { useNotifications } from '~/composables/useNotifications'
+import {ref, onMounted, reactive, computed} from 'vue'
+import {useConfiguration} from '~/composables/useConfiguration'
+import {useNotifications} from '~/composables/useNotifications'
 
 // --- Inyección de Composables ---
-const { listGlobalValues, createGlobalValue, updateGlobalValue } = useConfiguration()
-const { showSuccess, showError } = useNotifications()
+const {listGlobalValues, createGlobalValue, updateGlobalValue} = useConfiguration()
+const {showSuccess, showError} = useNotifications()
 
 // --- Estado de la UI ---
 const allValues = ref([])
@@ -106,8 +110,8 @@ const error = ref(null)
 
 // --- Estado de los Datos ---
 // Usaremos 'reactive' para que los inputs estén vinculados
-const uitData = reactive({ id: null, numericValue: 0 })
-const exchangeRateData = reactive({ id: null, numericValue: 0, stringValue: '' }) // stringValue para la fecha
+const uitData = reactive({id: null, numericValue: 0})
+const exchangeRateData = reactive({id: null, numericValue: 0, stringValue: ''}) // stringValue para la fecha
 
 // --- Funciones de Carga de Datos ---
 const fetchValues = async () => {
@@ -225,12 +229,15 @@ const handleSaveExchangeRate = async () => {
 .card {
   @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
 }
+
 .form-label {
   @apply block text-sm font-medium text-gray-700 mb-2;
 }
+
 .input-field {
   @apply block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition duration-150;
 }
+
 .btn-primary {
   @apply inline-flex items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-150 disabled:opacity-50;
 }
